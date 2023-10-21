@@ -1,8 +1,14 @@
 import React from 'react'
-import {useState, useRef} from 'react';
 
 const Acordion = (props) => {
     let category = props.category;
+    let arr = ["Vegitables", "Fruits", "Dairy Products"];
+
+    function check(a) {
+        console.log(a);
+        return arr.find((element) => element === a);
+    }
+
     let details = props.details;
     let nmber = props.number;
     const heading = `heading${nmber}`;
@@ -49,13 +55,20 @@ const Acordion = (props) => {
                                     <tr key={index}>
                                         <th scope='row'>{index + 1}</th>
                                         <td>{data.name}</td>
-                                        <td>{data.avg_usage}</td>
+                                        <td>{data["avg_usage"]}</td>
                                         <td>{data.price}</td>
-                                        <td>{data.curr_quantity}{" "}{data.unit}</td>
-                                        <td style={{paddingLeft: "50px"}}>
-                                            <a href={`https://www.amazon.in/s?k=${data.name}`} target='_blank' rel="noreferrer">
-                                                link
-                                            </a>
+                                        <td>{data["curr_quantity"]}{" "}{data.unit}</td>
+                                        <td style={{paddingLeft: "20px"}}>
+                                            {!check(category) ?
+                                                <a href={`https://www.amazon.in/s?k=${data.name}`} target='_blank'
+                                                   rel="noreferrer">
+                                                    Purchase Link
+                                                </a> :
+                                                <a href={`https://www.bigbasket.com/ps/?q=${data.name}`} target='_blank'
+                                                   rel="noreferrer">
+                                                    Purchase Link
+                                                </a>
+                                            }
                                         </td>
                                     </tr>
                                 );
