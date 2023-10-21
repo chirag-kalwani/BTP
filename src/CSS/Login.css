@@ -1,0 +1,27 @@
+.tab-content {
+    width: 80%;
+    margin: auto;
+}
+
+.nav-pills{
+    width: 75%;
+    margin: 15vh auto;
+}
+.loginContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.image{
+    margin-top: 3rem;
+}
+@media screen and (width <= 990px) {
+    .tab-content, .nav-pills{
+        width: 90%;
+    }
+    .loginContainer{
+        grid-template-columns: 1fr;
+    }
+    .image{
+        display: none;
+    }
+}

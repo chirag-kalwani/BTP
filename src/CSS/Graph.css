@@ -1,0 +1,12 @@
+.Graph{
+    background: #232526;
+    background: -webkit-linear-gradient(to right, #414345, #232526);
+    background: linear-gradient(to right, #414345, #232526);
+    overflow: hidden;
+}
+
+.table{
+    color: white;
+    border: 2px solid white;
+    font-weight: 600;
+}
