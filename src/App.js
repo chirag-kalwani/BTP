@@ -8,6 +8,7 @@ import Inventory from "./components/Inventory";
 import Login from "./components/Login";
 import Alert from "./components/Alert"
 import Register from "./components/Register";
+import Setting from "./components/Settings/Setting";
 import "./CSS/Login.css"
 import "./CSS/Navbar.css"
 import "./CSS/EnterProduct.css"
@@ -27,6 +28,7 @@ function App() {
                             <Route path="/EnterProducts" element={<EnterProducts/>}/>
                             <Route path="/Graphs" element={<Graphs/>}/>
                             <Route path="/Inventory" element={<Inventory/>}/>
+                            <Route path="/Settings" element={<Setting/>}/>
                             <Route path="/login" element={<Login/>}/>
                             <Route path="/register" element={<Register/>}/>
                         </Route>

@@ -5,7 +5,6 @@ const Acordion = (props) => {
     let arr = ["Vegitables", "Fruits", "Dairy Products"];
 
     function check(a) {
-        console.log(a);
         return arr.find((element) => element === a);
     }
 
