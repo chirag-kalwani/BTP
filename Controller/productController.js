@@ -4,16 +4,16 @@ const itemModel = require('../Model/allProducts');
 
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
+
 // Function for taking user entry
 module.exports.createProduct = async function createProduct(req,res){
     let productDetails = req.body;
 
-    const d = new Date();
     let name=productDetails.name;
+    const d = new Date();
     let date=d.getDate();
     let year=d.getFullYear();
     let month=months[d.getMonth()];
-    // let month="March";
 
     try{
         // Checking for an existing entry for the current month
@@ -28,6 +28,8 @@ module.exports.createProduct = async function createProduct(req,res){
             else{
                 inventoryDetails.currentQuantity += productDetails.newQuantity;
             }
+
+            inventoryDetails.lastEntry = d;
             inventoryDetails = await inventoryDetails.save();
         }
         else{
@@ -38,6 +40,9 @@ module.exports.createProduct = async function createProduct(req,res){
             else{
                 inventoryDetails.currentQuantity = productDetails.newQuantity;
             }
+
+            inventoryDetails.totalDays = 1;
+            inventoryDetails.lastEntry = d;
             inventoryDetails = await inventoryModel.create(inventoryDetails);
         }
         
@@ -139,14 +144,27 @@ module.exports.getInventory = async function getInventory(req,res){
     }
 }
 
+// Function to update product details in Inventory of an User.
 module.exports.updateProduct = async function getInventory(req,res){
     let name = req.body.name;
     let currQuantity=req.body.currentQuantity;
     let user = req.body.user;
+
+    const d = new Date();
+
     try{
-        let inventoryDetails = await inventoryModel.findOne({user:user,name:name});
+        let inventoryDetails = await inventoryModel.findOne({user:user, name:name});
 
         if(inventoryDetails){
+
+            // Updating Average Usage
+            if(currQuantity > 0){
+                inventoryDetails.averageUsage = (inventoryDetails.averageUsage * inventoryDetails.totalDays + (inventoryDetails.currentQuantity - currQuantity));
+                inventoryDetails.totalDays += (d - inventoryDetails.lastEntry);
+                inventoryDetails.averageUsage /= inventoryDetails.totalDays;
+                inventoryDetails.lastEntry = d;
+            }
+
             inventoryDetails.currentQuantity = currQuantity;
             inventoryDetails=await inventoryDetails.save();
 
@@ -160,7 +178,6 @@ module.exports.updateProduct = async function getInventory(req,res){
                 "Error" : "Inventory Details Not Found"
             });
         }
-
     }
     catch(err){
         return res.status(500).json({

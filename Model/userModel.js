@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const emailValidator = require("email-validator");  // For Validating Email
 
-const database_link="mongodb+srv://database_admin:ElDf7JgLLWdyHN8Q@cluster0.vsuxn2r.mongodb.net/?retryWrites=true&w=majority";
+const database_link="mongodb+srv://database_admin:LYTdPrD2KafHPy8d@cluster0.vsuxn2r.mongodb.net/?retryWrites=true&w=majority";
 // const database_password=ElDf7JgLLWdyHN8Q;
 
 

@@ -6,11 +6,11 @@ const productRouter = express.Router();
 productRouter.use(protectRoute);
 
 productRouter.route('/')
-.get(getInventory)
-.post(createProduct)
-.patch(updateProduct);
+    .get(getInventory)
+    .post(createProduct)
+    .patch(updateProduct);
 
 productRouter.route('/graph')
-.post(graphData);
+    .post(graphData);
 
 module.exports = productRouter;

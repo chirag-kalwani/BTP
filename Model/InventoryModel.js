@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const database_link="mongodb+srv://database_admin:ElDf7JgLLWdyHN8Q@cluster0.vsuxn2r.mongodb.net/?retryWrites=true&w=majority";
-// const database_password=ElDf7JgLLWdyHN8Q;
+const database_link="mongodb+srv://database_admin:LYTdPrD2KafHPy8d@cluster0.vsuxn2r.mongodb.net/?retryWrites=true&w=majority";
+// const database_password=LYTdPrD2KafHPy8d;
 
 // Connect to mongodb database
 mongoose.connect(database_link)
@@ -28,6 +28,12 @@ const inventorySchema = new mongoose.Schema({
         type: Number
     },
     averageUsage:{
+        type: Number
+    },
+    lastEntry:{
+        type: Date
+    },
+    totalDays:{
         type: Number
     }
 });
