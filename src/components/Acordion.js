@@ -15,10 +15,10 @@ const Acordion = (props) => {
     const collapse2 = `#collapse${nmber}`;
 
     return (
-        <>
+        <div>
             <div className="accordion-item">
                 <h2 className="accordion-header" id={heading}>
-                    <button className="accordion-button" type="button" data-bs-toggle="collapse"
+                    <button className="accordion-button acbtn" type="button" data-bs-toggle="collapse"
                             data-bs-target={collapse2} aria-expanded="false" aria-controls={collapse}>
                         <strong>{category}</strong>
                     </button>
@@ -77,8 +77,7 @@ const Acordion = (props) => {
                     </div>
                 </div>
             </div>
-
-        </>
+        </div>
     )
 }
 

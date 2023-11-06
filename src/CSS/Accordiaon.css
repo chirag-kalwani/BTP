@@ -1,16 +1,18 @@
 .acbody {
-    background: -webkit-linear-gradient(to right, #4568dc, #b06ab3);
-    background: linear-gradient(to right, #4568dc, #b06ab3);
-}
+    background: #1b263b !important;
 
+}
+.acbtn{
+    background: #6c757d !important;
+    color: white;
+}
 .btn2 {
     display: inline-block;
     width: 40px;
     height: 40px;
-
-    background-color: aqua;
     border-radius: 50%;
-    box-shadow: 0 5px 15px -5px #fbfcfe;
-    color: #011209;
+}
 
+.drawer{
+    background: #2B2B2B !important;
 }

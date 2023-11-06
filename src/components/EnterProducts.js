@@ -204,7 +204,7 @@ function EnterProducts() {
 
                 {/*Submit Details*/}
                 <button type="button" disabled={!issubmit} onClick={onDataSubmit}
-                        className="btn btn-primary btn-block mb-4">Submit Details
+                        className="btn btn-dark btn-block mb-4">Submit Details
                 </button>
 
             </form>

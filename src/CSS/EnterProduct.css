@@ -1,35 +1,33 @@
 .form-container{
     display: flex;
-    background: #70e1f5;
-    background: -webkit-linear-gradient(to right, #42275a, #734b6d);
-    background: linear-gradient(to right, #42275a, #734b6d);
+    padding: 50px;
     height: 100vh;
-    justify-content: center;
-    align-items: center;
+    background: #2B2B2B;
 }
 .EnterProduct-Form {
+    background: #423F3E;
     padding: 50px 25px 0 25px;
-     /* background: #C9FFBF; */
-     /* background: -webkit-linear-gradient(to right, #ddd6f3, #faaca8);
-    background: linear-gradient(to right, #ddd6f3, #faaca8);  */
-    background-color: white;
     border-radius: 10px;
-    overflow: scroll;
-    width: 70%;
-    height: 80vh;
+    width: 40%;
+    height: fit-content;
+}
+input, select{
+    background: #2B2B2B !important;
+    color: white !important;
 }
 @media screen and (width <= 1000px) {
+    .form-container{
+        padding: 25px;
+    }
     .EnterProduct-Form {
         width: 100%;
+        padding: 0;
     }
 }
-/* #ddd6f3 → #faaca8
-#eacda3 → #d6ae7b
-#bdc3c7 → #2c3e50
- #42275a → #734b6d
-
-FFAFBD->C9FFBF */
-/* #000428 → #004e92 */
+label {
+    color: white !important;
+    opacity: 1;
+}
 
 .error{
     color: red;
