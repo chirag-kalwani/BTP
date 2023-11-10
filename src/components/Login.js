@@ -3,6 +3,7 @@ import LoginRegisterNavbar from "./LoginRegisterNavbar";
 import {Link, useNavigate} from "react-router-dom";
 import UserContext from "../context/UserContext";
 import url from "../url";
+
 function Login() {
     const context = useContext(UserContext);
     const history = useNavigate();
@@ -79,7 +80,7 @@ function Login() {
 
                             {/*Register buttons */}
                             <div className="text-center">
-                                <p>Not a member? <Link to="/register">Register</Link></p>
+                                <p className="text-white">Not a member? <Link to="/register">Register</Link></p>
                             </div>
                         </form>
                     </div>

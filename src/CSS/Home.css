@@ -1,3 +1,63 @@
 @import url(https://fonts.googleapis.com/css?family=Seaweed+Script);
 @import url(https://fonts.googleapis.com/css?family=Arvo:700);
 
+/* Home.css */
+
+body {
+    background-color: #2B2B2B;;
+}
+
+/* Home.css */
+
+.home-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #423F3E;
+    color: whitesmoke;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-message {
+    font-size: 1.8em;
+    color: whitesmoke;
+    margin-bottom: 20px;
+}
+
+.description {
+    color: whitesmoke;
+}
+
+.features {
+    margin-top: 30px;
+}
+
+.features ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.features li {
+    margin-bottom: 10px;
+}
+
+.get-started {
+    margin-top: 30px;
+}
+
+.get-started p {
+    margin: 0;
+}
+
+.get-started a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.get-started a:hover {
+    text-decoration: underline;
+}
