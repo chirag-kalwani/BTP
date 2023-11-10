@@ -1,10 +1,9 @@
 .acbody {
     background: #1b263b !important;
-
 }
 .acbtn{
     background: #6c757d !important;
-    color: white;
+    color: white !important;
 }
 .btn2 {
     display: inline-block;

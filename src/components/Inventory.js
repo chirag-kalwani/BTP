@@ -155,18 +155,19 @@ function Inventory() {
                     </div>
                 </div>
 
-                <h2 className='inventh2'>This Month Inventory</h2>
-                <div style={{margin: "100px !important"}}>
-                    {!wait && Products.map((data, index) =>
-                        <div className="accordion" id="accordionExample">
-                            <Acordion key={index} category={data.category} details={data.product}
-                                      number={acordionNum[index]}
-                                      handleclick={handleclick}/>
-                        </div>
-                    )}
+                <div style={{padding: "50px"}}>
+                    <h2 className='inventh2'>This Month Inventory</h2>
+                    <div style={{margin: "100px !important"}}>
+                        {!wait && Products.map((data, index) =>
+                            <div className="accordion" id="accordionExample">
+                                <Acordion key={index} category={data.category} details={data.product}
+                                          number={acordionNum[index]}
+                                          handleclick={handleclick}/>
+                            </div>
+                        )}
+                    </div>
+                    <Spinner color="light"/>
                 </div>
-                <Spinner color="light"/>
-
             </div>
         </>
     );
