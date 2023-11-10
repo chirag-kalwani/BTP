@@ -16,17 +16,19 @@ function Home() {
         });
     }, []);
     return (
-        <div className="home-container">
-            <h1 className="welcome-message">Welcome to Household Inventory Management</h1>
-            <p className="description">
-                Keep track of your household expenses and manage your inventory seamlessly.
-            </p>
+        <div className="home">
+            <div className="home-container box">
+                <h1 className="welcome-message">Welcome to Household Inventory Management</h1>
+                <p className="description">
+                    Keep track of your household expenses and manage your inventory seamlessly.
+                </p>
+            </div>
             <div className="features">
                 <h2>Features:</h2>
-                <ul>
-                    <li>Enter and track your household purchases.</li>
-                    <li>View current month expenditure in a pie chart by category.</li>
-                    <li>Explore last 6 months expenditure in a line graph for specific products.</li>
+                <ul className="items">
+                    <li className="item box">1) Enter and track your household purchases.</li>
+                    <li className="item box">2) View current month expenditure in a pie chart by category.</li>
+                    <li className="item box">3) Explore last 6 months expenditure in a line graph for specific products.</li>
                 </ul>
             </div>
             <div className="get-started">

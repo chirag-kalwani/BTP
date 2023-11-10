@@ -8,22 +8,28 @@ body {
 }
 
 /* Home.css */
+.home {
+    margin: 20px;
+    height: 100vh;
+    color: whitesmoke;
+}
 
-.home-container {
+.box {
     max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
+    padding: 5px;
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #423F3E;
-    color: whitesmoke;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.home-container {
+    margin: auto;
 }
 
 .welcome-message {
     font-size: 1.8em;
-    color: whitesmoke;
     margin-bottom: 20px;
 }
 
@@ -33,19 +39,24 @@ body {
 
 .features {
     margin-top: 30px;
+    text-align: center;
 }
 
-.features ul {
-    list-style-type: none;
-    padding: 0;
+.items{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    margin: 25px;
 }
 
-.features li {
-    margin-bottom: 10px;
+.item{
+    flex: 1 1 0;
+    list-style: none;
 }
 
 .get-started {
     margin-top: 30px;
+    text-align: center;
 }
 
 .get-started p {
