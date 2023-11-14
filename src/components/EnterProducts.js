@@ -1,12 +1,13 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import check from "../Controllers/CheckJwt";
 import UserContext from "../context/UserContext";
-import {getAllProducts} from "../Controllers/GetProductsDetails";
+import { getAllProducts } from "../Controllers/GetProductsDetails";
 import url from "../url";
+import BarcodeScanner from './BarcodeScanner';
 
 function EnterProducts() {
     const context = useContext(UserContext);
-    const {FlipLoginStats, allDetails, setCompleteDetails, showAlert} = context;
+    const { FlipLoginStats, allDetails, setCompleteDetails, showAlert } = context;
     const token = localStorage.getItem('authToken');
     // All use States
     const [details, setDetail] = useState({
@@ -15,19 +16,30 @@ function EnterProducts() {
     const [products, setProducts] = useState([]);
     const [unit, setUnit] = useState("");
     const [categories, setCategories] = useState([]);
+    const [scanData, setscanData] = useState({});
+    const scanning = (scan) => {
+        if (scan.status_verbose === "product found") {
+            for (const key in scan.product) {
+                if (key === "nutriments") {
+                    setscanData(scan.product.nutriments);
+                }
+            }
+        }
+        console.log(scan);
+    }
 
     const onValueChange = (e) => {
-        setDetail({...details, [e.target.name]: e.target.value});
+        setDetail({ ...details, [e.target.name]: e.target.value });
     }
 
     const onCategorySelect = (e) => {
-        setDetail({...details, [e.target.name]: e.target.value});
+        setDetail({ ...details, [e.target.name]: e.target.value });
         const temp = categories.filter(x => x.category === e.target.value);
         setProducts(temp[0].items);
     }
 
     const onProductSelect = (e) => {
-        setDetail({...details, [e.target.name]: e.target.value});
+        setDetail({ ...details, [e.target.name]: e.target.value });
         const temp = products.filter(x => x.name === e.target.value);
         setUnit(temp[0].unit);
     }
@@ -137,78 +149,100 @@ function EnterProducts() {
 
 
     return (
-        <div className='form-container'>
-            <form className="EnterProduct-Form">
-                {/*Select Category*/}
-                <div className="form-floating mb-3">
-                    <select required={require} onBlur={handlefocus4} focused={focus4.toString()}
+        <>
+            <div className='form-container'>
+                <form className="EnterProduct-Form">
+                    {/*Select Category*/}
+                    <div className="form-floating mb-3">
+                        <select required={require} onBlur={handlefocus4} focused={focus4.toString()}
                             onChange={onCategorySelect} id="category" className="form-select" name="category">
-                        <option value="">Select Category</option>
-                        {categories.map((data, index) => <option value={data.category}
-                                                                 key={index}>{data.category}</option>)}
-                    </select>
-                    <label htmlFor="category">Category</label>
-                    <span className='error'>{errorMessage2}</span>
-                </div>
+                            <option value="">Select Category</option>
+                            {categories.map((data, index) => <option value={data.category}
+                                key={index}>{data.category}</option>)}
+                        </select>
+                        <label htmlFor="category">Category</label>
+                        <span className='error'>{errorMessage2}</span>
+                    </div>
 
-                {/*Select Product*/}
-                <div className="form-floating mb-3">
-                    <select required={require} onBlur={handlefocus5} focused={focus5.toString()}
+                    {/*Select Product*/}
+                    <div className="form-floating mb-3">
+                        <select required={require} onBlur={handlefocus5} focused={focus5.toString()}
                             onChange={onProductSelect} id="product" className="form-select" name="product_name">
-                        <option value="">Select Product</option>
-                        {products.map((data, index) => <option value={data.name} key={index}> {data.name} </option>)}
-                    </select>
-                    <label htmlFor="product">Products</label>
-                    <span className='error'>{errorMessage2}</span>
-                </div>
+                            <option value="">Select Product</option>
+                            {products.map((data, index) => <option value={data.name} key={index}> {data.name} </option>)}
+                        </select>
+                        <label htmlFor="product">Products</label>
+                        <span className='error'>{errorMessage2}</span>
+                    </div>
 
-                {/*Enter Quantity*/}
-                <div className="form-floating mb-3">
-                    <input pattern={"^(0|[1-9][0-9]{0,9})$"} required={require} onBlur={handlefocus1}
-                           focused={focus1.toString()} type="text" name="Quantity" id="quantity" placeholder='Not Used'
-                           onChange={onValueChange}
-                           value={details.Quantity}
-                           className="form-control"/>
-                    <label htmlFor="quantity">Quantity in {unit}</label>
-                    <span className='error'>{errorMessage}</span>
-                </div>
+                    {/*Enter Quantity*/}
+                    <div className="form-floating mb-3">
+                        <input pattern={"^(0|[1-9][0-9]{0,9})$"} required={require} onBlur={handlefocus1}
+                            focused={focus1.toString()} type="text" name="Quantity" id="quantity" placeholder='Not Used'
+                            onChange={onValueChange}
+                            value={details.Quantity}
+                            className="form-control" />
+                        <label htmlFor="quantity">Quantity in {unit}</label>
+                        <span className='error'>{errorMessage}</span>
+                    </div>
 
-                {/*Enter Brand*/}
-                <div className="form-floating mb-3">
-                    <input type="text" name="brand" id="brand" placeholder='Not Used' value={details.brand}
-                           onChange={onValueChange}
-                           className="form-control"/>
-                    <label htmlFor="brand">Brand</label>
-                </div>
+                    {/*Enter Brand*/}
+                    <div className="form-floating mb-3">
+                        <input type="text" name="brand" id="brand" placeholder='Not Used' value={details.brand}
+                            onChange={onValueChange}
+                            className="form-control" />
+                        <label htmlFor="brand">Brand</label>
+                    </div>
 
-                {/*Enter Price*/}
-                <div className="form-floating mb-3">
-                    <input pattern={"^(0|[1-9][0-9]{0,9})$"} onBlur={handlefocus2} focused={focus2.toString()}
-                           required={require} type="text" name="price" id="price" placeholder="Not Used"
-                           value={details.price}
-                           onChange={onValueChange}
-                           className="form-control"/>
-                    <label htmlFor="price">Price</label>
-                    <span className='error'>{errorMessage}</span>
-                </div>
+                    {/*Enter Price*/}
+                    <div className="form-floating mb-3">
+                        <input pattern={"^(0|[1-9][0-9]{0,9})$"} onBlur={handlefocus2} focused={focus2.toString()}
+                            required={require} type="text" name="price" id="price" placeholder="Not Used"
+                            value={details.price}
+                            onChange={onValueChange}
+                            className="form-control" />
+                        <label htmlFor="price">Price</label>
+                        <span className='error'>{errorMessage}</span>
+                    </div>
 
-                {/*Enter Remaining Quantity*/}
-                <div className="form-floating mb-3">
-                    <input pattern={"^(0|[1-9][0-9]{0,9})$"} onBlur={handlefocus3} focused={focus3.toString()}
-                           required={require} type="text" name="Remaining_quantity" id="remain"
-                           value={details.Remaining_quantity}
-                           onChange={onValueChange} className="form-control" placeholder='Qunatity left in Home'/>
-                    <label htmlFor="remain">Quantity in your House Left</label>
-                    <span className='error'>{errorMessage}</span>
-                </div>
+                    {/*Enter Remaining Quantity*/}
+                    <div className="form-floating mb-3">
+                        <input pattern={"^(0|[1-9][0-9]{0,9})$"} onBlur={handlefocus3} focused={focus3.toString()}
+                            required={require} type="text" name="Remaining_quantity" id="remain"
+                            value={details.Remaining_quantity}
+                            onChange={onValueChange} className="form-control" placeholder='Qunatity left in Home' />
+                        <label htmlFor="remain">Quantity in your House Left</label>
+                        <span className='error'>{errorMessage}</span>
+                    </div>
 
-                {/*Submit Details*/}
-                <button type="button" disabled={!issubmit} onClick={onDataSubmit}
+                    {/*Submit Details*/}
+                    <button type="button" disabled={!issubmit} onClick={onDataSubmit}
                         className="btn btn-dark btn-block mb-4">Submit Details
-                </button>
+                    </button>
 
-            </form>
-        </div>
+                </form>
+            </div>
+
+
+
+
+            <BarcodeScanner scanning={scanning} />
+
+            <div>
+                
+                <table className="table">
+
+                    <tbody>
+                        {Object.keys(scanData).map((keyName, i) => (
+                            <tr key={i}>
+                            <td>{keyName}</td>
+                            <td>{" "+scanData[keyName]}</td>
+                        </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
 
     );
 }
