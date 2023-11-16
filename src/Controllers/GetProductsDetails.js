@@ -1,10 +1,12 @@
 // const token = localStorage.getItem('authToken');
 import url from "../url";
+import table from "../components/Tables/Table";
+
 const fetchData = async (token) => {
     try {
         let response = await fetch(`${url}/product`, {
             method: 'GET',
-            headers: {authToken: token}
+            headers: { authToken: token }
         });
         return await response.json();
     } catch (error) {
@@ -27,10 +29,11 @@ const makeitems = (unique_categories, details) => {
         }
         items.push(obj);
     }
+    console.log(items);
     return items;
 }
 
-async function getAllProducts(token){
+async function getAllProducts(token) {
     let response = await fetch(`${url}/getAllItems`);
     return await response.json();
 }
@@ -40,4 +43,4 @@ async function GetProductsDetails(token) {
     return makeitems([...new Set(data['Inventory'].map((element) => element.category))], data['Inventory']);
 }
 
-export {GetProductsDetails, getAllProducts};
+export { GetProductsDetails, getAllProducts };
