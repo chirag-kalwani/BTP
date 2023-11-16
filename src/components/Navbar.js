@@ -183,9 +183,9 @@ export default function Navbar() {
                             </div>
                         </div>
 
-                        <SuggestionModal />
                     </div>
                 </nav>
+                <SuggestionModal />
                 <Alert />
                 <Outlet />
             </div>
