@@ -62,15 +62,15 @@ function Setting(props) {
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
+                        <div className="modal-content bg-dark">
+                            <div className="modal-header text-light">
                                 <h5 className="modal-title" id="exampleModalLabel">Update Your Profile</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
+                            </div> 
+                            <div className="modal-body text-light">
                                 <div className="d-flex mt-3 align-items-center">
-                                    <label style={{width: "125px"}} className="text-dark" htmlFor="updateName">Full
+                                    <label style={{width: "125px"}} className="text-light" htmlFor="updateName">Full
                                         Name</label>
                                     <input
                                         className="form-control w-50 bg-white text-dark"
@@ -97,15 +97,15 @@ function Setting(props) {
                 <div className="modal fade" id="passwordModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
                     <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
+                        <div className="modal-content bg-dark">
+                            <div className="modal-header text-light">
                                 <h5 className="modal-title" id="exampleModalLabel">Update Your Password</h5>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
-                            <div className="modal-body">
+                            <div className="modal-body text-light">
                                 <div className="d-flex mt-3 align-items-center">
-                                    <label style={{width: "125px"}} className="text-dark" htmlFor="updatePassword">old
+                                    <label style={{width: "125px"}} className="text-light" htmlFor="updatePassword">old
                                         Password</label>
                                     <input
                                         className="form-control w-50 bg-white text-dark"

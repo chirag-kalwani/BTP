@@ -1,16 +1,22 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {GetProductsDetails} from "../Controllers/GetProductsDetails";
+import React, { useContext, useEffect, useState } from 'react';
+import { GetProductsDetails } from "../Controllers/GetProductsDetails";
 import check from "../Controllers/CheckJwt";
 import UserContext from "../context/UserContext";
 import Spinner from "./Spinner";
+import Table from './Tables/Table';
 
 
 function SuggestionModal() {
     const context = useContext(UserContext);
-    const {FlipLoginStats, setCompleteData, data, toogleWait, wait} = context;
-    const [Products, setProducts] = useState([]);
+    const { FlipLoginStats, setCompleteData, data, toogleWait, wait } = context;
+    const [names, setNames] = useState([]);
+    const [days, setDays] = useState([]);
     const token = localStorage.getItem('authToken');
 
+    useEffect(() => {
+        console.log(names);
+        console.log(days);
+    }, [names, days])
     useEffect(() => {
         toogleWait(true);
         if (!token) FlipLoginStats(false);
@@ -21,31 +27,28 @@ function SuggestionModal() {
                 if (!data) {
                     GetProductsDetails(token).then(data => {
                         setCompleteData(data);
-                        let dt = []
-                        for (let d of data) {
-                            for (let p of d["product"]) {
-                                if (p["days_left"] < 15)
-                                    dt.push({
-                                        name: p["name"],
-                                        days: p["days_left"]
-                                    })
-                            }
-                        }
-                        setProducts(dt);
+                        let n = [], dt = []
+                        for (let d of data)
+                            for (let p of d["product"])
+                                if (p["days_left"] < 15) {
+                                    n.push(p["name"])
+                                    dt.push(p["days_left"])
+                                }
+                        setNames(n);
+                        setDays(dt);
                         toogleWait(false);
                     });
                 } else {
-                    let dt = []
-                    for (let d of data) {
-                        for (let p of d["product"]) {
-                            if (p["days_left"] < 15)
-                                dt.push({
-                                    name: p["name"],
-                                    days: p["days_left"]
-                                })
-                        }
-                    }
-                    setProducts(dt);
+                    setCompleteData(data);
+                    let n = [], dt = []
+                    for (let d of data)
+                        for (let p of d["product"])
+                            if (p["days_left"] < 15) {
+                                n.push(p["name"])
+                                dt.push(p["days_left"])
+                            }
+                    setNames(n);
+                    setDays(dt);
                     toogleWait(false);
                 }
             }
@@ -54,34 +57,24 @@ function SuggestionModal() {
     return (
         <div>
             <div className="modal fade" id="suggestionModal" tabIndex="-1"
-                 aria-labelledby="suggestionModalLabel"
-                 aria-hidden="true">
+                aria-labelledby="suggestionModalLabel"
+                aria-hidden="true">
                 <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
+                    <div className="modal-content bg-dark">
+                        <div className="modal-header text-light">
                             You need to buy:
                         </div>
                         {
                             wait ?
-                                <Spinner/>
+                                <Spinner />
                                 :
-                                <div className="modal-body">
-                                    {
-                                        Products.map((pdt, ind) => (
-                                            <div key={ind} style={{fontSize: "35px"}}>
-                                                {pdt["name"]}: {(pdt["days"] == null) ? 0 : pdt["days"]} days left
-                                            </div>
-                                        ))
-                                    }
-                                </div>
+                                <Table labels={names} series={days} sym=" days left" l1="Products" l2="Expected" />
                         }
                     </div>
                 </div>
             </div>
         </div>
-    )
-
-        ;
+    );
 }
 
 export default SuggestionModal;
