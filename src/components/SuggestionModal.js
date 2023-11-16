@@ -12,7 +12,6 @@ function SuggestionModal() {
     const token = localStorage.getItem('authToken');
 
     useEffect(() => {
-        if (Products.length) { console.log(Products); return; }
         toogleWait(true);
         if (!token) FlipLoginStats(false);
         check(token).then((res) => {
@@ -25,10 +24,11 @@ function SuggestionModal() {
                         let dt = []
                         for (let d of data) {
                             for (let p of d["product"]) {
-                                dt.push({
-                                    name: p["name"],
-                                    days: p["days_left"]
-                                })
+                                if (p["days_left"] < 15)
+                                    dt.push({
+                                        name: p["name"],
+                                        days: p["days_left"]
+                                    })
                             }
                         }
                         setProducts(dt);
@@ -38,6 +38,7 @@ function SuggestionModal() {
                     let dt = []
                     for (let d of data) {
                         for (let p of d["product"]) {
+                            if (p["days_left"] < 15)
                             dt.push({
                                 name: p["name"],
                                 days: p["days_left"]
@@ -49,7 +50,7 @@ function SuggestionModal() {
                 }
             }
         });
-    }, [Products]);
+    }, []);
     return (
         <div>
             <div className="modal fade" id="suggestionModal" tabIndex="-1" aria-labelledby="suggestionModalLabel"
