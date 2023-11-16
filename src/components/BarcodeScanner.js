@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
 import Quagga from 'quagga';
 
+
+import { useEffect } from 'react';
+import useWindowSize from '../Hooks/useWindowSize';
 function BarcodeScanner(props) {
-    const [isScannerOpen, setIsScannerOpen] = useState(false);
+    const [isScannerOpen, setIsScannerOpen] = useState(true);
 
     const [productname, setproductname] = useState("");
+    const [width] = useWindowSize();
+    //const [width] = useWindowSize();
     const handlesave = (b) => {
         const apiUrl = `https://world.openfoodfacts.net/api/v2/product/${b}?fields=product_name,nutriments,categories_tags_en`;
 
@@ -53,16 +58,22 @@ function BarcodeScanner(props) {
         // })
     }
 
+useEffect(() => {
+
+  initScanner();
+}, [width])
 
     const initScanner = () => {
+        let wid=document.getElementById('scanbutton');
+        let hieght=(window.innerWidth>1000)?530:192
         Quagga.init({
             inputStream: {
                 name: 'Live',
                 type: 'LiveStream',
                 target: document.querySelector('#scanner-container'),
                 constraints: {
-                    width: 640,
-                    height: 480,
+                    width: wid.clientWidth,
+                    height: hieght,
                     facingMode: 'user', // Use the device's rear camera
                 },
             },
@@ -111,7 +122,7 @@ function BarcodeScanner(props) {
             flexDirection: "column",
             marginRight: "20px"
         }}>
-            <button onClick={toggleScanner}>
+            <button id="scanbutton" onClick={toggleScanner}>
                 {isScannerOpen ? 'Close Scanner' : 'Open Scanner'}
             </button>
             <div id="scanner-container"></div>

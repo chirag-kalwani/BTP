@@ -21,6 +21,7 @@ function EnterProducts() {
     const [scanCategories, setScanCategories] = useState([]);
     const [catefound, setCatefound] = useState("");
     const [nutrifound, setnutrifound] = useState("");
+
     const scanning = (scan) => {
         setscanData({});
         setScanCategories([]);
