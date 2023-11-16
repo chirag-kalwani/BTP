@@ -60,7 +60,7 @@ function SuggestionModal() {
                 aria-labelledby="suggestionModalLabel"
                 aria-hidden="true">
                 <div className="modal-dialog">
-                    <div className="modal-content bg-dark">
+                    <div className="modal-content" style={{backgroundColor:"grey"}}>
                         <div className="modal-header text-light">
                             You need to buy:
                         </div>

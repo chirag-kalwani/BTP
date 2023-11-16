@@ -94,7 +94,7 @@ useEffect(() => {
             Quagga.stop();
             setIsScannerOpen(false);
             // console.log(barcode);
-            handlesave(barcodeNumber);
+            handlesave("3017624010701");
             console.log('Detected barcode: ' + barcodeNumber);
 
             // You can now use the barcodeNumber as needed in your application.

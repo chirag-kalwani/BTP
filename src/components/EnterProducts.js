@@ -21,17 +21,25 @@ function EnterProducts() {
     const [scanCategories, setScanCategories] = useState([]);
     const [catefound, setCatefound] = useState("");
     const [nutrifound, setnutrifound] = useState("");
+    const [nutrients,setNutrients]=useState({});
 
     const scanning = (scan) => {
         setscanData({});
         setScanCategories([]);
         setCatefound("Categories Not Found");
         setnutrifound("Nutrients Value Not Found");
+        let nutritemp={};
         if (scan.status_verbose === "product found") {
             for (const key in scan.product) {
+
                 if (key === "nutriments") {
                     setscanData(scan.product.nutriments);
                     if (scan.product.nutriments.length !== 0)
+                        for(const key2 in scan.product.nutriments){
+                            if(key2==="carbohydrates"||key2==="fat"||key2==="proteins"||key2==="salt"||key2==="saturated-fat"||key2==="sodium"||key2==="sugars"){
+                                nutritemp[key2]=scan.product.nutriments[key2];
+                            }
+                        }
                         setnutrifound("Nutrients");
                 }
                 if (key === "product_name") {
@@ -43,10 +51,11 @@ function EnterProducts() {
                         setCatefound("Categories");
                 }
             }
+            setNutrients(nutritemp);
         } else {
             setScanName("Product Not found");
         }
-        console.log(scan);
+        console.log(nutritemp);
     }
 
     const onValueChange = (e) => {
@@ -95,7 +104,8 @@ function EnterProducts() {
                     'price': Number(details.price),
                     'name': details.product_name,
                     'newQuantity': Number(details.Quantity),
-                    'remainingQuantity': Number(details.Remaining_quantity)
+                    'remainingQuantity': Number(details.Remaining_quantity),
+                    'Nutrients':nutrients
                 })
             });
             const json = await response.json();
