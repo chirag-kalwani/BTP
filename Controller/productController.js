@@ -4,16 +4,16 @@ const itemModel = require('../Model/allProducts');
 
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-
-// Function for taking user entry
+// Function for taking user entry of a product.
 module.exports.createProduct = async function createProduct(req,res){
     let productDetails = req.body;
 
     let name=productDetails.name;
+
     const d = new Date();
-    let date=d.getDate();
-    let year=d.getFullYear();
-    let month=months[d.getMonth()];
+    const date=d.getDate();
+    const year=d.getFullYear();
+    const month=months[d.getMonth()];
 
     try{
         // Checking for an existing entry for the current month
@@ -33,7 +33,15 @@ module.exports.createProduct = async function createProduct(req,res){
             inventoryDetails = await inventoryDetails.save();
         }
         else{
-            inventoryDetails ={"user":productDetails.user, "name":productDetails.name, "category":productDetails.category};
+            inventoryDetails = {
+                user: productDetails.user,
+                name: productDetails.name,
+                category: productDetails.category,
+                averageUsage: 0,
+                totalDays: 1,
+                lastEntry: d,
+            };
+
             if(productDetails.remainingQuantity >=0){
                 inventoryDetails.currentQuantity = productDetails.remainingQuantity + productDetails.newQuantity;
             }
@@ -41,8 +49,6 @@ module.exports.createProduct = async function createProduct(req,res){
                 inventoryDetails.currentQuantity = productDetails.newQuantity;
             }
 
-            inventoryDetails.totalDays = 1;
-            inventoryDetails.lastEntry = d;
             inventoryDetails = await inventoryModel.create(inventoryDetails);
         }
         
@@ -92,11 +98,10 @@ module.exports.createProduct = async function createProduct(req,res){
 };
 
 module.exports.getInventory = async function getInventory(req,res){
-    let user = req.body.user;
+    const user = req.body.user;
     const d = new Date();
-    let year=d.getFullYear();
-    let month=months[d.getMonth()];
-    // let month="March";
+    const year=d.getFullYear();
+    const month=months[d.getMonth()];
 
     try{
         let inventoryDetails = await inventoryModel.find({user:user});
@@ -126,8 +131,11 @@ module.exports.getInventory = async function getInventory(req,res){
 
             productDetails.name = inventoryDetails[x].name;
             productDetails.category = inventoryDetails[x].category;
-            productDetails.avg_usage = 1;
+            productDetails.avg_usage = inventoryDetails[x].averageUsage;
             productDetails.curr_quantity = inventoryDetails[x].currentQuantity;
+
+            productDetails.days_left = Math.floor(((inventoryDetails[x].currentQuantity - inventoryDetails[x].averageUsage * (Math.floor((d - inventoryDetails[x].lastEntry)/(1000*24*3600)))))/inventoryDetails[x].averageUsage);
+            productDetails.days_left = Math.max(0, productDetails.days_left);
             finalInventory.push(productDetails);
         }
 
@@ -159,10 +167,11 @@ module.exports.updateProduct = async function getInventory(req,res){
 
             // Updating Average Usage
             if(currQuantity > 0){
-                inventoryDetails.averageUsage = (inventoryDetails.averageUsage * inventoryDetails.totalDays + (inventoryDetails.currentQuantity - currQuantity));
-                inventoryDetails.totalDays += (d - inventoryDetails.lastEntry);
-                inventoryDetails.averageUsage /= inventoryDetails.totalDays;
+                let totalUsage = (inventoryDetails.averageUsage * inventoryDetails.totalDays + (inventoryDetails.currentQuantity - currQuantity));
+                inventoryDetails.totalDays += Math.floor((d - inventoryDetails.lastEntry)/(1000*24*3600));
                 inventoryDetails.lastEntry = d;
+                
+                inventoryDetails.averageUsage = totalUsage/inventoryDetails.totalDays;
             }
 
             inventoryDetails.currentQuantity = currQuantity;
