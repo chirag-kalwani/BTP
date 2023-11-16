@@ -19,6 +19,7 @@ const AlertState = ({children}) => {
         }, 2000);
     }
     const FlipLoginStats = async (stats) => {
+        if(!stats && !localStorage.getItem('authToken')) return;
         if (!stats) localStorage.removeItem('authToken');
         setIsLogin(stats);
         if (!stats) window.location.href = '/';

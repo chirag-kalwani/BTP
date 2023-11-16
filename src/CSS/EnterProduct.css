@@ -1,70 +1,81 @@
 .EnterP {
-  display: flex;
-  justify-content: space-around;
+    display: flex;
+    aspect-ratio: unset;
+}
 
-  width: 100%;
-}
 .e1 {
-  width: 100%;
+    width: 100%;
 }
+
 .e2 {
-  width: 50%;
-  margin-top: 50px;
+    width: 50%;
+    margin-top: 50px;
 }
+
 .form-container {
-  padding: 50px;
-  height: 100vh;
-  background: #2b2b2b;
+    padding: 50px;
+    height: 100vh;
+    background: #2b2b2b;
 }
+
 .EnterProduct-Form {
-  background: #423f3e;
-  padding: 50px 25px 0 25px;
-  border-radius: 10px;
-  width: 100%;
-  height: fit-content;
+    background: #423f3e;
+    padding: 50px 25px 0 25px;
+    border-radius: 10px;
+    width: 100%;
+    height: fit-content;
 }
+
 input,
 select {
-  background: #2b2b2b !important;
-  color: white !important;
+    background: #2b2b2b !important;
+    color: white !important;
 }
+
 @media screen and (width <= 1000px) {
-  .EnterP {
-    flex-direction: column-reverse;
-    align-items: center;
-  }
-  .form-container {
-    padding: 25px;
-  }
-  .EnterProduct-Form {
-    width: 100%;
-    padding: 0;
-  }
+    .EnterP {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .form-container {
+        padding: 25px;
+    }
+
+    .EnterProduct-Form {
+        width: 100%;
+        padding: 0;
+    }
 }
+
 label {
-  color: white !important;
-  opacity: 1;
+    color: white !important;
+    opacity: 1;
 }
 
 .error {
-  color: red;
-  padding: 3px;
-  display: none;
+    color: red;
+    padding: 3px;
+    display: none;
 }
+
 .error2 {
-  color: red;
-  padding: 3px;
+    color: red;
+    padding: 3px;
 }
+
 input:invalid[focused="true"] {
-  border: 1px solid red;
+    border: 1px solid red;
 }
+
 input:invalid[focused="true"] ~ span {
-  display: block;
+    display: block;
 }
 
 select:invalid[focused="true"] {
-  border: 1px solid red;
+    border: 1px solid red;
 }
+
 select:invalid[focused="true"] ~ span {
-  display: block;
+    display: block;
 }

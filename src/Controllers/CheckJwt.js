@@ -1,6 +1,7 @@
 import url from "../url";
 const uri = `${url}/user`;
 const check = async (jwt) => {
+    if(!jwt) return;
     try {
         let data = await fetch(uri, {
             method: 'GET',

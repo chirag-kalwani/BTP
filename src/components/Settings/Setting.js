@@ -42,10 +42,18 @@ function Setting(props) {
         //  update new password
     }
 
+    const mainCss = {
+        background: "#423f3e",
+        padding: "50px 25px 0 25px",
+        borderRadius: "10px",
+        width: "50%",
+        height: "fit-content",
+    }
+
     return (
         <div className="form-container d-flex justify-content-center">
 
-            <div className="EnterProduct-Form">
+            <div style={{...mainCss}}>
 
                 {/*Modal For Update Name*/}
                 <button ref={ref} type="button" className="btn btn-primary invisible" data-bs-toggle="modal"
@@ -53,7 +61,7 @@ function Setting(props) {
                 </button>
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
-                    <div className="modal-dialog" >
+                    <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title" id="exampleModalLabel">Update Your Profile</h5>

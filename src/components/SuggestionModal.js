@@ -1,13 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { GetProductsDetails } from "../Controllers/GetProductsDetails";
+import React, {useContext, useEffect, useState} from 'react';
+import {GetProductsDetails} from "../Controllers/GetProductsDetails";
 import check from "../Controllers/CheckJwt";
 import UserContext from "../context/UserContext";
-
+import Spinner from "./Spinner";
 
 
 function SuggestionModal() {
     const context = useContext(UserContext);
-    const { FlipLoginStats, setCompleteData, data, toogleWait, wait } = context;
+    const {FlipLoginStats, setCompleteData, data, toogleWait, wait} = context;
     const [Products, setProducts] = useState([]);
     const token = localStorage.getItem('authToken');
 
@@ -39,10 +39,10 @@ function SuggestionModal() {
                     for (let d of data) {
                         for (let p of d["product"]) {
                             if (p["days_left"] < 15)
-                            dt.push({
-                                name: p["name"],
-                                days: p["days_left"]
-                            })
+                                dt.push({
+                                    name: p["name"],
+                                    days: p["days_left"]
+                                })
                         }
                     }
                     setProducts(dt);
@@ -53,27 +53,35 @@ function SuggestionModal() {
     }, []);
     return (
         <div>
-            <div className="modal fade" id="suggestionModal" tabIndex="-1" aria-labelledby="suggestionModalLabel"
-                aria-hidden="true">
+            <div className="modal fade" id="suggestionModal" tabIndex="-1"
+                 aria-labelledby="suggestionModalLabel"
+                 aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
                             You need to buy:
                         </div>
-                        <div className="modal-body">
-                            {
-                                Products.map((pdt, ind) => (
-                                    <div key={ind} style={{ fontSize: "35px" }}>
-                                        {pdt["name"]}: {pdt["days"]} days left
-                                    </div>
-                                ))
-                            }
-                        </div>
+                        {
+                            wait ?
+                                <Spinner/>
+                                :
+                                <div className="modal-body">
+                                    {
+                                        Products.map((pdt, ind) => (
+                                            <div key={ind} style={{fontSize: "35px"}}>
+                                                {pdt["name"]}: {(pdt["days"] == null) ? 0 : pdt["days"]} days left
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
-    );
+    )
+
+        ;
 }
 
 export default SuggestionModal;
