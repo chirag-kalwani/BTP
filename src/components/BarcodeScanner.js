@@ -6,52 +6,52 @@ function BarcodeScanner(props) {
 
   const [productname, setproductname] = useState("");
   const handlesave = (b) => {
-    //     const apiUrl = `https://world.openfoodfacts.net/api/v2/product/${b}?fields=product_name`;
+        const apiUrl = `https://world.openfoodfacts.net/api/v2/product/${b}?fields=product_name,nutriments,categories_tags_en`;
 
 
 
-    // fetch(apiUrl)
-    //   .then((response) => {
+    fetch(apiUrl)
+      .then((response) => {
 
-    //     return response.json();
-    //   })
-    //   .then((data) => {
+        return response.json();
+      })
+      .then((data) => {
 
-    //     props.scanning(data);
+        props.scanning(data);
 
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
-    props.scanning({
-      "product": {
-        "nutriments": {
-          "carbohydrates": 57.5,
-          "carbohydrates_100g": 57.5,
-          "carbohydrates_unit": "g",
-          "carbohydrates_value": 57.5,
-          "energy": 2255,
-          "energy-kcal": 539,
-          "energy-kcal_100g": 539,
-          "energy-kcal_unit": "kcal",
-          "sugars": 56.3,
-          "sugars_100g": 56.3,
-          "sugars_unit": "g",
-          "sugars_value": 56.3
-        },
-        "nutriscore_data": {
-          "energy": 2255,
-          "energy_points": 6,
-          "energy_value": 2255,
-          "sugars_points": 10,
-          "sugars_value": 56.3
-        },
-        "nutrition_grades": "e",
-        "product_name": "Nutella"
-      },
-      "status": 1,
-      "status_verbose": "product found"
-    })
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    // props.scanning({
+    //   "product": {
+    //     "nutriments": {
+    //       "carbohydrates": 57.5,
+    //       "carbohydrates_100g": 57.5,
+    //       "carbohydrates_unit": "g",
+    //       "carbohydrates_value": 57.5,
+    //       "energy": 2255,
+    //       "energy-kcal": 539,
+    //       "energy-kcal_100g": 539,
+    //       "energy-kcal_unit": "kcal",
+    //       "sugars": 56.3,
+    //       "sugars_100g": 56.3,
+    //       "sugars_unit": "g",
+    //       "sugars_value": 56.3
+    //     },
+    //     "nutriscore_data": {
+    //       "energy": 2255,
+    //       "energy_points": 6,
+    //       "energy_value": 2255,
+    //       "sugars_points": 10,
+    //       "sugars_value": 56.3
+    //     },
+    //     "nutrition_grades": "e",
+    //     "product_name": "Nutella"
+    //   },
+    //   "status": 1,
+    //   "status_verbose": "product found"
+    // })
   }
 
 
@@ -65,7 +65,7 @@ function BarcodeScanner(props) {
         constraints: {
           width: 640,
           height: 480,
-          facingMode: 'environment', // Use the device's rear camera
+          facingMode: 'user', // Use the device's rear camera
         },
       },
       decoder: {

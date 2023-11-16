@@ -17,13 +17,34 @@ function EnterProducts() {
     const [unit, setUnit] = useState("");
     const [categories, setCategories] = useState([]);
     const [scanData, setscanData] = useState({});
+    const [scanName,setScanName]=useState("");
+    const [scanCategories,setScanCategories]=useState([]);
+    const [catefound,setCatefound]=useState("");
+    const [nutrifound,setnutrifound]=useState("");
     const scanning = (scan) => {
+        setscanData({});
+        setScanCategories([]);
+        setCatefound("Categories Not Found");
+        setnutrifound("Nutrients Value Not Found");
         if (scan.status_verbose === "product found") {
             for (const key in scan.product) {
                 if (key === "nutriments") {
                     setscanData(scan.product.nutriments);
+                    if(scan.product.nutriments.length!==0)
+                    setnutrifound("Nutrients");
+                }
+                if(key==="product_name"){
+                    setScanName(scan.product.product_name);
+                }
+                if(key==="categories_tags_en"){
+                    setScanCategories(scan.product.categories_tags_en);
+                    if(scan.product.categories_tags_en.length!==0)
+                    setCatefound("Categories");
                 }
             }
+        }
+        else{
+            setScanName("Product Not found");
         }
         console.log(scan);
     }
@@ -227,6 +248,20 @@ function EnterProducts() {
             <div className='e2'>
                 <BarcodeScanner scanning={scanning} />
                 <div>
+                    <h2 style={{color:"white"}}>{scanName}</h2>
+                    <h4 style={{color:"yellow"}}>{catefound}</h4>
+                    <table className="table">
+                        <tbody>
+                            {scanCategories.map((value,ind)=>(
+
+                                    <tr key={ind}>
+                                    <td>{value}</td>
+                                </tr>
+                            )
+                                )}
+                        </tbody>
+                    </table>
+                    <h4 style={{color:"yellow"}}>{nutrifound}</h4>
                     <table className="table">
                         <tbody>
                             {Object.keys(scanData).map((keyName, i) => (
