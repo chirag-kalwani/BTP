@@ -1,15 +1,15 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import LoginRegisterNavbar from "./LoginRegisterNavbar";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import url from "../url";
 
 function Login() {
     const context = useContext(UserContext);
     const history = useNavigate();
-    const {showAlert, FlipLoginStats} = context;
+    const { showAlert, FlipLoginStats } = context;
     const server = url;
-    const [data, setData] = useState({email: "", password: ""});
+    const [data, setData] = useState({ email: "", password: "" });
     const handleChange = (event) => {
         setData({
             ...data,
@@ -32,6 +32,7 @@ function Login() {
             if (jsonData['authToken']) {
                 localStorage.setItem('authToken', jsonData['authToken']);
                 localStorage.setItem('name', jsonData['User']['name']);
+                localStorage.setItem('email', jsonData['User']['email']);
                 showAlert('Login successfully', "success");
                 FlipLoginStats(true);
                 history('/');
@@ -46,24 +47,24 @@ function Login() {
         <div className="loginContainer">
             <div className="image">
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-                     className="img-fluid" alt="Sample"/>
+                    className="img-fluid" alt="Sample" />
             </div>
             <div>
-                <LoginRegisterNavbar/>
+                <LoginRegisterNavbar />
                 <div className="tab-content">
                     <div className="tab-pane active">
                         <form>
                             {/*Email input*/}
                             <div className="form-floating mb-3">
                                 <input type="text" className="form-control" id="email"
-                                       onChange={handleChange} placeholder="Email address" name="email"/>
+                                    onChange={handleChange} placeholder="Email address" name="email" />
                                 <label htmlFor="email">Email address</label>
                             </div>
 
                             {/*Password input*/}
                             <div className="form-floating">
                                 <input type="password" className="form-control" id="password"
-                                       onChange={handleChange} placeholder="Password" name="password"/>
+                                    onChange={handleChange} placeholder="Password" name="password" />
                                 <label htmlFor="password">Password</label>
                             </div>
 

@@ -1,6 +1,5 @@
 // const token = localStorage.getItem('authToken');
 import url from "../url";
-import table from "../components/Tables/Table";
 
 const fetchData = async (token) => {
     try {

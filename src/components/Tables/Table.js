@@ -1,7 +1,6 @@
 import React from 'react';
 
 function Table({ labels = [], series = [], colors = [], l1 = "Category", l2 = "Expenditure", sym = " ₹" }) {
-    console.log(labels, series);
     return (
         <div style={{ color: `${colors != [] ? "white" : "black"}` }} >
             <table className="table">

@@ -9,6 +9,7 @@ export default function Navbar() {
     const [openSetting, setOpenSetting] = useState(false);
     const [openInventory, setOpenInventory] = useState(false);
     const [openGraphs, setOpenGraphs] = useState(false);
+    const [suggestionModalOpen, setSuggestionModalOpen] = useState(false);
     const context = useContext(UserContext);
     const { isLogin } = context;
     const location = useLocation();
@@ -159,6 +160,7 @@ export default function Navbar() {
                                                 ref={suggestionModalRef}
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#suggestionModal"
+                                                onClick={() => setSuggestionModalOpen(true)}
                                                 to="#">
                                                 Suggestion
                                             </Link>
@@ -185,7 +187,7 @@ export default function Navbar() {
 
                     </div>
                 </nav>
-                <SuggestionModal />
+                <SuggestionModal open={suggestionModalOpen} />
                 <Alert />
                 <Outlet />
             </div>

@@ -24,7 +24,7 @@ function Graphs() {
     const colors = ['rgb(0, 143, 251)', 'rgb(0, 227, 150)', 'rgb(254, 176, 25)', 'rgb(255, 69, 96)', 'rgb(119, 93, 208)', 'rgb(0, 143, 251)', 'rgb(0, 227, 150)'];
 
     const context = useContext(UserContext);
-    const {FlipLoginStats, setCompleteData, data, toogleWait, wait, allDetails, setCompleteDetails} = context;
+    const {FlipLoginStats, setCompleteData, data, toogleWait, allDetails, setCompleteDetails} = context;
     const token = localStorage.getItem('authToken');
 
 
