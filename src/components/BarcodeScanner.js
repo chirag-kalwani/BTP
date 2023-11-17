@@ -92,7 +92,7 @@ function BarcodeScanner(props) {
             setIsScannerOpen(false);
             // console.log(barcode);
             handlesave("3017624010701");
-            console.log('Detected barcode: ' + barcodeNumber);
+            console.log('Detected barcode: ' + barcodeNumber+" hello");
 
             // You can now use the barcodeNumber as needed in your application.
         });
