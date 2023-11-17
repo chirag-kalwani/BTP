@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Top3ProductModal from './Top3ProductModal';
 const Acordion = (props) => {
     let category = props.category;
     let arr = ["Vegitables", "Fruits", "Dairy Products"];
@@ -15,6 +15,7 @@ const Acordion = (props) => {
     const collapse2 = `#collapse${nmber}`;
 
     return (
+        <>
         <div>
             <div className="accordion-item">
                 <h2 className="accordion-header" id={heading}>
@@ -77,12 +78,17 @@ const Acordion = (props) => {
                                                             d="M13.9536 10C15.4596 11.5118 15.3239 14.0991 13.6506 15.7789L11.2268 18.2121L8.80299 20.6454C7.12969 22.3252 4.55237 22.4613 3.0464 20.9495C1.54043 19.4377 1.67609 16.8504 3.34939 15.1706L5.77323 12.7373"
                                                             stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
                                                     </svg>
+                                                    <button data-bs-toggle="modal"
+                                                    onClick={()=>props.handletop3()}
+                                                        data-bs-target="#top3product" style={{ marginLeft: "8px" }} className='btn2'><i className="fa-solid fa-tag"></i></button>
                                                 </div>
                                             </td>
                                             <td>{data["avg_usage"]} {data.unit} / day</td>
                                             <td>{data.price}</td>
                                             <td>{data["curr_quantity"]}{" "}{data.unit}</td>
+
                                         </tr>
+
                                     );
                                 })}
                             </tbody>
@@ -91,6 +97,8 @@ const Acordion = (props) => {
                 </div>
             </div>
         </div>
+
+        </>
     )
 }
 

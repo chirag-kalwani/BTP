@@ -50,8 +50,8 @@ function SuggestionModal({open}) {
                 aria-labelledby="suggestionModalLabel"
                 aria-hidden="true">
                 <div className="modal-dialog">
-                    <div className="modal-content bg-dark">
-                        <div className="modal-header text-light">
+                    <div className="modal-content" style={{backgroundColor:"#696969"}}>
+                        <div className="modal-header" style={{color:"lightblue"}}>
                             You need to buy:
                         </div>
                         <Spinner />

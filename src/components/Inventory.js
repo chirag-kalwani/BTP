@@ -5,7 +5,7 @@ import check from "../Controllers/CheckJwt";
 import { GetProductsDetails } from "../Controllers/GetProductsDetails";
 import Spinner from "./Spinner";
 import url from "../url";
-
+import Top3ProductModal from './Top3ProductModal.js';
 function Inventory() {
     const context = useContext(UserContext);
     const { FlipLoginStats, setCompleteData, data, toogleWait, wait } = context;
@@ -35,10 +35,11 @@ function Inventory() {
     }, []);
     const acordionNum = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
     const ref = useRef(null);
-
+    const ref2=useRef(null);
     const [newdetails, setnewDetails] = useState({ product_name: "", new_quantity: "" });
     const handleclick = (details) => {
         setDetails(details);
+        console.log("nice");
         ref.current.click();
     }
     const onchange = (e) => {
@@ -92,7 +93,15 @@ function Inventory() {
     const [issubmit, setIssubmit] = useState(false);
     useEffect(() => {
         isvalid();
-    }, [newdetails])
+    }, [newdetails]);
+    const [brands, setbrands] = useState(["almond","ohjdij"]);
+    const [userno, setuserno] = useState(["1","2"]);
+    const [productName,setProductName]=useState("");
+    const handletop3=(list,userNo,name)=>{
+        setbrands(list);
+        setuserno(userNo);
+        setProductName(name);
+    }
 
     return (
         <>
@@ -102,6 +111,11 @@ function Inventory() {
                     data-bs-target="#exampleModal">
                     Launch demo modal
                 </button>
+                {/* <button ref={ref2} type="button" className="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#top3product">
+                    Launch demo modal
+                </button> */}
+                <Top3ProductModal BrandList={brands} usersNo={userno} productName={productName}/>
 
                 {/*Modal open only when button click*/}
 
@@ -160,7 +174,7 @@ function Inventory() {
                     <div style={{ margin: "100px !important" }}>
                         {!wait && Products.map((data, index) =>
                             <div key={index} className="accordion" id="accordionExample">
-                                <Acordion category={data.category} details={data.product}
+                                <Acordion handletop3={handletop3} category={data.category} details={data.product}
                                     number={acordionNum[index]}
                                     handleclick={handleclick} />
                             </div>
@@ -169,6 +183,7 @@ function Inventory() {
                     <Spinner color="light" />
                 </div>
             </div>
+
         </>
     );
 }

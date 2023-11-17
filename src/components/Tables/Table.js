@@ -6,8 +6,8 @@ function Table({ labels = [], series = [], colors = [], l1 = "Category", l2 = "E
             <table className="table">
                 <thead>
                     <tr>
-                        <th scope="col">{l1}</th>
-                        <th scope="col">{l2}</th>
+                        <th scope="col" style={{color:"lightblue"}}>{l1}</th>
+                        <th scope="col" style={{color:"lightblue"}}>{l2}</th>
                     </tr>
                 </thead>
                 <tbody>
