@@ -61,7 +61,7 @@ function BarcodeScanner(props) {
                 constraints: {
                     width: wid.clientWidth,
                     height: hieght,
-                    facingMode: 'user', // Use the device's front camera
+                    facingMode: 'environment', // Use the device's front camera
                 },
             },
             decoder: {
