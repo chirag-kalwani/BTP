@@ -55,7 +55,7 @@ function EnterProducts() {
         } else {
             setScanName("Product Not found");
         }
-        console.log(nutritemp);
+        //console.log(nutritemp);
     }
 
     const onValueChange = (e) => {
