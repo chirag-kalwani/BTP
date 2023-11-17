@@ -50,6 +50,12 @@ const Acordion = (props) => {
                             </thead>
                             <tbody>
                                 {details.map((data, index) => {
+                                    let Brandlist=[];
+                                    let userno=[];
+                                    for(const key in data.list){
+                                        Brandlist.push(key);
+                                        userno.push(data.list[key]);
+                                    }
                                     return (
                                         <tr key={index}>
                                             <th scope='row'>{index + 1}</th>
@@ -79,7 +85,7 @@ const Acordion = (props) => {
                                                             stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
                                                     </svg>
                                                     <button data-bs-toggle="modal"
-                                                    onClick={()=>props.handletop3()}
+                                                    onClick={()=>props.handletop3(Brandlist,userno,data.name)}
                                                         data-bs-target="#top3product" style={{ marginLeft: "8px" }} className='btn2'><i className="fa-solid fa-tag"></i></button>
                                                 </div>
                                             </td>
