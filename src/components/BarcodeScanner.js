@@ -42,7 +42,7 @@ function BarcodeScanner(props) {
         // });
         // video.src='';
         //
-        mediastreamtrack.stop();
+       // mediastreamtrack.stop();
 
         // console.log(tracks);
     //     const video = document.querySelector('#scanner-container video');
