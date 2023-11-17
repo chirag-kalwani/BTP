@@ -77,6 +77,92 @@ module.exports.login = async function login(req,res){
     }
 }
 
+module.exports.updateUser = async function updateUser(req, res){
+    let type = req.body.type;
+
+    if(type == 1){
+        if(req.body.name){
+            const newName = req.body.name;
+            const userData = await userModel.findById(req.body.user);
+
+            userData.name = newName;
+
+            await userData.save();
+
+            return res.json({
+                Message: "Name Changed Successfully",
+                name: newName
+            });
+        }
+        else{
+            return res.status(400).json({
+                Message: "Name Missing"
+            });
+        }
+    }
+    else if(type == 2){
+        if(req.body.password){
+            const oldPassword = req.body.password;
+            const userData = await userModel.findById(req.body.user);
+
+            if(userData.password == oldPassword){
+                return res.json({
+                    Message: "Password Matched Successfully"
+                });
+            }
+            else{
+                return res.status(400).json({
+                    Message: "OLD Password Not Matched"
+                });
+            }
+        }
+        else{
+            return res.status(400).json({
+                Message: "Password Missing"
+            });
+        }
+    }
+    else if(type == 3){
+        if(req.body.oldPassword && req.body.newPassword){
+            const oldPassword = req.body.oldPassword;
+            const newPassword = req.body.newPassword;
+
+            const userData = await userModel.findById(req.body.user);
+
+            if(userData.password == oldPassword){
+                userData.password = newPassword;
+
+                try{
+                    await userData.save();
+                    return res.json({
+                        Message: "Password Changed Successfully"
+                    });
+                }
+                catch(err){
+                    return res.status(400).json({
+                        Message: err.message
+                    });
+                }
+            }
+            else{
+                return res.status(400).json({
+                    Message: "OLD Password Not Matched"
+                });
+            }
+        }
+        else{
+            return res.status(400).json({
+                Message: "Password Missing"
+            });
+        }
+    }
+    else{
+        return res.status(500).json({
+            Message: "Incorrect Choice"
+        });
+    }
+}
+
 // Function to check if the user is logged in
 module.exports.isLoggedIn = async function isLoggedIn(req,res){
     try{
