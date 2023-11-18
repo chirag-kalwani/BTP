@@ -59,8 +59,8 @@ function BarcodeScanner(props) {
                 type: 'LiveStream',
                 target: document.querySelector('#scanner-container'),
                 constraints: {
-                    width:wid.clientWidth,
-                    height: hieght,
+                    width:680,
+                    height: 500,
                     facingMode: 'environment', // Use the device's front camera
                 },
             },
