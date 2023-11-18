@@ -52,15 +52,15 @@ function BarcodeScanner(props) {
 
     const initScanner = () => {
         let wid=document.getElementById('scanbutton');
-        let hieght=(window.innerWidth>1000)?530:400
+        let hieght=480
         Quagga.init({
             inputStream: {
                 name: 'Live',
                 type: 'LiveStream',
                 target: document.querySelector('#scanner-container'),
                 constraints: {
-                    width:680,
-                    height: 500,
+                    width:window.innerWidth>1000?wid.clientWidth:(wid.clientWidth>600?wid.clientWidth:600),
+                    height: hieght,
                     facingMode: 'environment', // Use the device's front camera
                 },
             },
