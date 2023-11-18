@@ -28,6 +28,7 @@ const makeitems = (unique_categories, details) => {
         }
         items.push(obj);
     }
+    //console.log(items);
     return items;
 }
 

@@ -52,9 +52,10 @@ const Acordion = (props) => {
                                 {details.map((data, index) => {
                                     let Brandlist=[];
                                     let userno=[];
-                                    for(const key in data.list){
-                                        Brandlist.push(key);
-                                        userno.push(data.list[key]);
+
+                                    for(let i =0;i<data.topBrands.length;i++){
+                                        Brandlist.push(data.topBrands[i].key);
+                                        userno.push(data.topBrands[i].value);
                                     }
                                     return (
                                         <tr key={index}>

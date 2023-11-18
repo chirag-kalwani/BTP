@@ -98,6 +98,7 @@ function Inventory() {
     const [userno, setuserno] = useState(["1","2"]);
     const [productName,setProductName]=useState("");
     const handletop3=(list,userNo,name)=>{
+        console.log(list);
         setbrands(list);
         setuserno(userNo);
         setProductName(name);
