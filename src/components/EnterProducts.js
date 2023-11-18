@@ -116,7 +116,7 @@ function EnterProducts() {
             showAlert("Something went wrong", "danger");
         }
         setDetail({
-            category: "", product_name: "", brand: "", price: "", Quantity: "", Remaining_quantity: ""
+            brand: "", price: "", Quantity: "", Remaining_quantity: ""
         });
     }
 
