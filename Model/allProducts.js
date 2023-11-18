@@ -18,7 +18,7 @@ const itemSchema = new mongoose.Schema({
     },
     items :{
         type: Array
-    },
+    }
 });
 
 const itemModel = mongoose.model('itemModel',itemSchema);

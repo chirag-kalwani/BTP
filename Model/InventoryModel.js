@@ -24,6 +24,9 @@ const inventorySchema = new mongoose.Schema({
     category:{
         type: String
     },
+    brand:{
+        type: String
+    },
     currentQuantity:{
         type: Number
     },

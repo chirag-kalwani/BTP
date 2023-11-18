@@ -1,14 +1,16 @@
 const productModel = require('../Model/userProducts');
 const inventoryModel = require('../Model/InventoryModel');
-const itemModel = require('../Model/allProducts');
+// const itemModel = require('../Model/allProducts');
+const itemModel = require('../Model/itemModel');
 
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 // Function for taking user entry of a product.
 module.exports.createProduct = async function createProduct(req,res){
     let productDetails = req.body;
-
     let name=productDetails.name;
+    let category = productDetails.category;
+    let brand = productDetails.brand;
 
     const d = new Date();
     const date=d.getDate();
@@ -19,6 +21,17 @@ module.exports.createProduct = async function createProduct(req,res){
         // Checking for an existing entry for the current month
         let product = await productModel.findOne({user:productDetails.user, name:name, year:year, month:month});
         let inventoryDetails = await inventoryModel.findOne({user:productDetails.user, name:name});
+        let itemDetails = await itemModel.findOne({category: category});
+
+        let newItem = itemDetails.items.get(name);
+        if(!newItem.topBrands){
+            newItem.topBrands = {};
+        }
+        if(!newItem.topBrands.get(brand)){
+            newItem.topBrands.set(brand, 0);
+        }
+        newItem.topBrands.set(brand, newItem.topBrands.get(brand)+1);
+        itemDetails.items.set(name, newItem);
 
         // Updating the information of current product in inventory database
         if(inventoryDetails){
@@ -28,8 +41,14 @@ module.exports.createProduct = async function createProduct(req,res){
             else{
                 inventoryDetails.currentQuantity += productDetails.newQuantity;
             }
-
+            
+            if(inventoryDetails.brand){
+                let prevBrand = itemDetails.items.get(name).topBrands.get(inventoryDetails.brand);
+                itemDetails.items.get(name).topBrands.set(inventoryDetails.brand, prevBrand - 1);
+            }
+            
             inventoryDetails.lastEntry = d;
+            inventoryDetails.brand = productDetails.brand;
             inventoryDetails = await inventoryDetails.save();
         }
         else{
@@ -37,6 +56,7 @@ module.exports.createProduct = async function createProduct(req,res){
                 user: productDetails.user,
                 name: productDetails.name,
                 category: productDetails.category,
+                brand: productDetails.brand,
                 averageUsage: 0,
                 totalDays: 1,
                 lastEntry: d,
@@ -51,6 +71,8 @@ module.exports.createProduct = async function createProduct(req,res){
 
             inventoryDetails = await inventoryModel.create(inventoryDetails);
         }
+
+        await itemDetails.save();
         
         if(product){
             product.date = date;
@@ -119,16 +141,28 @@ module.exports.getInventory = async function getInventory(req,res){
             // Adding Respective units in the object
             for(y=0;y<allitems.length;y++){
                 if(allitems[y].category==inventoryDetails[x].category){
-                    for(z=0;z<allitems[y].items.length;z++){
-                        if(allitems[y].items[z].name == inventoryDetails[x].name){
-                            productDetails.unit = allitems[y].items[z].unit;
-                            break;
+                    productDetails.unit = allitems[y].items.get(inventoryDetails[x].name).unit;
+                    productDetails.topBrands = allitems[y].items.get(inventoryDetails[x].name).topBrands;
+
+                    let tempBrands = [];
+                    if(productDetails.topBrands){
+                        for (const [key, value] of productDetails.topBrands.entries()) {
+                            tempBrands.push({key, value});
                         }
                     }
-                    break;
+
+                    tempBrands = tempBrands.sort((a, b) => {
+                        return b.value - a.value;
+                    });
+
+                    tempBrands = tempBrands.filter((element, index) => {return element.value>0 && index<3;});
+                    productDetails.topBrands = tempBrands;
                 }
             }
-
+            
+            if(!productDetails.topBrands){
+                productDetails.topBrands = {};
+            }
             productDetails.name = inventoryDetails[x].name;
             productDetails.category = inventoryDetails[x].category;
             productDetails.avg_usage = inventoryDetails[x].averageUsage;
