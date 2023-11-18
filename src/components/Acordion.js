@@ -32,7 +32,7 @@ const Acordion = (props) => {
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Product</th>
-                                    <th scope="col">Average Usage</th>
+                                    <th scope="col">Days Remaining</th>
                                     <th scope="col">Expense(Rs)
                                     </th>
                                     <th scope="col">Quantity left
@@ -90,10 +90,9 @@ const Acordion = (props) => {
                                                         data-bs-target="#top3product" style={{ marginLeft: "8px" }} className='btn2'><i className="fa-solid fa-tag"></i></button>
                                                 </div>
                                             </td>
-                                            <td>{data["avg_usage"]} {data.unit} / day</td>
+                                            <td>{data["days_left"]} days</td>
                                             <td>{data.price}</td>
                                             <td>{data["curr_quantity"]}{" "}{data.unit}</td>
-
                                         </tr>
 
                                     );

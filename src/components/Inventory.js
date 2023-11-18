@@ -112,10 +112,6 @@ function Inventory() {
                     data-bs-target="#exampleModal">
                     Launch demo modal
                 </button>
-                {/* <button ref={ref2} type="button" className="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#top3product">
-                    Launch demo modal
-                </button> */}
                 <Top3ProductModal BrandList={brands} usersNo={userno} productName={productName}/>
 
                 {/*Modal open only when button click*/}
