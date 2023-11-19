@@ -64,25 +64,20 @@ function BarcodeScanner(props) {
                     facingMode: 'environment', // Use the device's front camera
                 },
             },
-            locator: {
-                "patchSize": "medium",
-                "halfSample": true
-              },
-              "locate": true,
-              "numOfWorkers": 2,
-              "frequency": 10,
+
             decoder: {
-                readers: ["code_128_reader",
-                "ean_reader",
-                "ean_8_reader",
-                "code_39_reader",
-                "code_39_vin_reader",
-                "codabar_reader",
-                "upc_reader",
-                "upc_e_reader",
-                "i2of5_reader"], // Change the reader type according to your barcode format
+                readers: ["ean_reader"], // Change the reader type according to your barcode format
 
             },
+            // "code_128_reader",
+            //     "ean_reader",
+            //     "ean_8_reader",
+            //     "code_39_reader",
+            //     "code_39_vin_reader",
+            //     "codabar_reader",
+            //     "upc_reader",
+            //     "upc_e_reader",
+            //     "i2of5_reader"
         }, function (err) {
             if (err) {
                 console.error(err);
