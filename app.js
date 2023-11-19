@@ -22,7 +22,6 @@ app.get('/getAllItems',async (req,res)=>{
     let finalItems = [];
     for(let item of items){
         let curr = {};
-        curr._id = item._id;
         curr.category = item.category;
         curr.items = [];
 
