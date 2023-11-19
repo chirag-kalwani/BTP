@@ -22,15 +22,17 @@ module.exports.createProduct = async function createProduct(req,res){
         let inventoryDetails = await inventoryModel.findOne({user:productDetails.user, name:name});
         let itemDetails = await itemModel.findOne({category: category});
 
-        let newItem = itemDetails.items.get(name);
-        if(!newItem.topBrands){
-            newItem.topBrands = {};
+        if(brand != ""){
+            let newItem = itemDetails.items.get(name);
+            if(!newItem.topBrands){
+                newItem.topBrands = {};
+            }
+            if(!newItem.topBrands.get(brand)){
+                newItem.topBrands.set(brand, 0);
+            }
+            newItem.topBrands.set(brand, newItem.topBrands.get(brand)+1);
+            itemDetails.items.set(name, newItem);
         }
-        if(!newItem.topBrands.get(brand)){
-            newItem.topBrands.set(brand, 0);
-        }
-        newItem.topBrands.set(brand, newItem.topBrands.get(brand)+1);
-        itemDetails.items.set(name, newItem);
 
         // Updating the information of current product in inventory database
         if(inventoryDetails){
@@ -41,13 +43,13 @@ module.exports.createProduct = async function createProduct(req,res){
                 inventoryDetails.currentQuantity += productDetails.newQuantity;
             }
             
-            if(inventoryDetails.brand){
+            if(brand!="" && inventoryDetails.brand!=""){
                 let prevBrand = itemDetails.items.get(name).topBrands.get(inventoryDetails.brand);
                 itemDetails.items.get(name).topBrands.set(inventoryDetails.brand, prevBrand - 1);
             }
             
             inventoryDetails.lastEntry = d;
-            inventoryDetails.brand = productDetails.brand;
+            inventoryDetails.brand = brand;
             inventoryDetails = await inventoryDetails.save();
         }
         else{
