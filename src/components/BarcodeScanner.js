@@ -138,7 +138,8 @@ function BarcodeScanner(props) {
             closeCam();
             setIsScannerOpen(false);
             // console.log(barcode);
-            handlesave("3017624010701");
+            //handlesave("3017624010701");
+            handlesave(barcodeNumber);
             console.log('Detected barcode: ' + barcodeNumber+" hello");
 
             // You can now use the barcodeNumber as needed in your application.
