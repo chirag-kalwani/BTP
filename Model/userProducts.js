@@ -37,19 +37,12 @@ const productSchema = mongoose.Schema({
     unit:{
         type: String
     },
-    brand:{
-        type: String
-    },
     price:{
         type: Number,
         required: true
     },
     totalQuantity:{
         type: Number
-    },
-    newQuantity:{
-        type: Number,
-        required: true
     }
 });
 
