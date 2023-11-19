@@ -16,8 +16,4 @@ userRouter.route('/signup')
 userRouter.route('/login')
 .post(login);
 
-// // Logout User
-// userRouter.route('/logout')
-// .get(logout);
-
 module.exports = userRouter;

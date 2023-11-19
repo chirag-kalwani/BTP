@@ -56,7 +56,7 @@ module.exports.createProduct = async function createProduct(req,res){
                 name: productDetails.name,
                 category: productDetails.category,
                 brand: productDetails.brand,
-                averageUsage: 0,
+                averageUsage: 1,
                 totalDays: 1,
                 lastEntry: d,
             };
@@ -75,8 +75,6 @@ module.exports.createProduct = async function createProduct(req,res){
         
         if(product){
             product.date = date;
-            product.brand = productDetails.brand;
-            product.newQuantity = productDetails.newQuantity;
             product.price += productDetails.price;
             product.totalQuantity += productDetails.newQuantity;
             
@@ -93,6 +91,8 @@ module.exports.createProduct = async function createProduct(req,res){
             productDetails.month=month;
             productDetails.year=year;
             productDetails.totalQuantity = productDetails.newQuantity;
+
+            productDetails.brand = productDetails.newQuantity = undefined;
 
             const createdProduct = await productModel.create(productDetails);
             
