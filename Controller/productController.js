@@ -1,6 +1,5 @@
 const productModel = require('../Model/userProducts');
 const inventoryModel = require('../Model/InventoryModel');
-// const itemModel = require('../Model/allProducts');
 const itemModel = require('../Model/itemModel');
 
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -127,6 +126,7 @@ module.exports.getInventory = async function getInventory(req,res){
 
     try{
         let inventoryDetails = await inventoryModel.find({user:user});
+
         let allitems = await itemModel.find();
         let finalInventory =[];
         

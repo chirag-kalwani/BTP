@@ -1,7 +1,7 @@
 const express=require('express');
 const userRouter=require('./Router/userRouter');
 const productRouter=require('./Router/productRouter');
-const itemModel = require('./Model/allProducts');
+const itemModel = require('./Model/itemModel');
 const cors = require('cors');
 
 const app=express();
@@ -18,8 +18,23 @@ app.use('/product',productRouter);
 // Endpoint to get all the products in Database
 app.get('/getAllItems',async (req,res)=>{
     let items = await itemModel.find();
+
+    let finalItems = [];
+    for(let item of items){
+        let curr = {};
+        curr._id = item._id;
+        curr.category = item.category;
+        curr.items = [];
+
+        for (const [key, value] of item.items.entries()) {
+            curr.items.push({"name": key, "unit": value.unit});
+        }
+        
+        finalItems.push(curr);
+    }
+
     return res.json({
         "Message" : "All Items",
-        Items: items
+        Items: finalItems
     });
 })
